@@ -25,8 +25,9 @@ func TestAppAuthorizeUrl(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := app.AuthorizeUrl(c.shopName, c.nonce)
-		if actual != c.expected {
+		actual, err := app.AuthorizeUrl(c.shopName, c.nonce)
+		if err != nil || actual != c.expected {
+			fmt.Println(err)
 			t.Errorf("App.AuthorizeUrl(): expected %s, actual %s", c.expected, actual)
 		}
 	}

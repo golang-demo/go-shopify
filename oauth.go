@@ -21,8 +21,11 @@ var accessTokenRelPath = "admin/oauth/access_token"
 //
 // State is a unique value that can be used to check the authenticity during a
 // callback from Shopify.
-func (app App) AuthorizeUrl(shopName string, state string) string {
-	shopUrl, _ := url.Parse(ShopBaseUrl(shopName))
+func (app App) AuthorizeUrl(shopName string, state string) (string, error) {
+	shopUrl, err := url.Parse(ShopBaseUrl(shopName))
+	if err != nil {
+		return "", err
+	}
 	shopUrl.Path = "/admin/oauth/authorize"
 	query := shopUrl.Query()
 	query.Set("client_id", app.ApiKey)
@@ -30,7 +33,7 @@ func (app App) AuthorizeUrl(shopName string, state string) string {
 	query.Set("scope", app.Scope)
 	query.Set("state", state)
 	shopUrl.RawQuery = query.Encode()
-	return shopUrl.String()
+	return shopUrl.String(), nil
 }
 
 func (app App) GetAccessToken(shopName string, code string) (string, error) {
