@@ -88,6 +88,7 @@ type Client struct {
 	SmartCollection            SmartCollectionService
 	Customer                   CustomerService
 	CustomerAddress            CustomerAddressService
+	Checkout                   CheckoutService
 	Order                      OrderService
 	Fulfillment                FulfillmentService
 	DraftOrder                 DraftOrderService
@@ -261,6 +262,7 @@ func NewClient(app App, shopName, token string, opts ...Option) *Client {
 	c.Product = &ProductServiceOp{client: c}
 	c.CustomCollection = &CustomCollectionServiceOp{client: c}
 	c.SmartCollection = &SmartCollectionServiceOp{client: c}
+	c.Checkout = &CheckoutServiceOp{client: c}
 	c.Customer = &CustomerServiceOp{client: c}
 	c.CustomerAddress = &CustomerAddressServiceOp{client: c}
 	c.Order = &OrderServiceOp{client: c}

@@ -17,11 +17,9 @@ type CheckoutListOptions struct {
 // of the Shopify API.
 // See: https://help.shopify.com/api/reference/checkout
 type CheckoutService interface {
-	List(interface{}) ([]Checkout, error)
 	Create(Checkout) (*Checkout, error)
-	Get(int64, interface{}) (*Checkout, error)
+	Get(string, interface{}) (*Checkout, error)
 	Update(Checkout) (*Checkout, error)
-	Delete(int64) error
 }
 
 // CheckoutServiceOp handles communication with the checkout related methods of
