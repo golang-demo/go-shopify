@@ -2,7 +2,8 @@ package goshopify
 
 import (
 	"fmt"
-	"time"
+
+	"github.com/shopspring/decimal"
 )
 
 const checkoutsBasePath = "checkouts"
@@ -125,25 +126,49 @@ type CheckoutServiceOp struct {
 //   }
 // Checkout represents a Shopify checkout
 type Checkout struct {
-	CompletedAt         *time.Time `json:"completed_at,omitempty"`
-	CreatedAt           *time.Time `json:"created_at,omitempty"`
-	Currency            string     `json:"currency,omitempty"`
-	PresentmentCurrency string     `json:"presentment_currency,omitempty"`
-	CustomerId          int64      `json:"customer_id,omitempty"`
-	CustomerLocale      string     `json:"customer_locale,omitempty"`
-	// device_id            string     `json:"device_id,omitempty"`
-	DiscountCode  *DiscountCode  `json:"discount_code,omitempty"`
-	DiscountCodes []DiscountCode `json:"discount_codes,omitempty"`
-	Email         string         `json:"email,omitempty"`
-	// legal_notice_url           `json:"legal_notice_url,omitempty"`
-	// location_id           `json:"location_id,omitempty"`
-	Name            string            `json:"name,omitempty"`
-	Note            string            `json:"note,omitempty"`
-	NoteAttributes  map[string]string `json:"note_attributes,omitempty"`
-	LineItems       []LineItem        `json:"line_items,omitempty"`
-	TaxLines        []TaxLine         `json:"tax_lines,omitempty"`
-	ShippingAddress Address           `json:"shipping_address,omitempty"`
-	Token           string            `json:"token,omitempty"`
+	// CompletedAt         *time.Time `json:"completed_at,omitempty"`
+	// CreatedAt           *time.Time `json:"created_at,omitempty"`
+	// Currency            string     `json:"currency,omitempty"`
+	// PresentmentCurrency string     `json:"presentment_currency,omitempty"`
+	// CustomerId          int64      `json:"customer_id,omitempty"`
+	// CustomerLocale      string     `json:"customer_locale,omitempty"`
+	// // device_id            string     `json:"device_id,omitempty"`
+	DiscountCode string `json:"discount_code,omitempty"`
+	// DiscountCodes []DiscountCode `json:"discount_codes,omitempty"`
+	Email string `json:"email,omitempty"`
+	// // legal_notice_url           `json:"legal_notice_url,omitempty"`
+	// // location_id           `json:"location_id,omitempty"`
+	// Name string `json:"name,omitempty"`
+	// Note string `json:"note,omitempty"`
+	// NoteAttributes  map[string]string `json:"note_attributes,omitempty"`
+	LineItems []CheckoutLineItem `json:"line_items,omitempty"`
+	// TaxLines        []TaxLine  `json:"tax_lines,omitempty"`
+	// ShippingAddress Address    `json:"shipping_address,omitempty"`
+	Token  string `json:"token,omitempty"`
+	WebURL string `json:"web_url,omitempty"`
+}
+
+type CheckoutLineItem struct {
+	ID                 string           `json:"id,omitempty"`
+	Key                string           `json:"key,omitempty"`
+	ProductID          int64            `json:"product_id,omitempty"`
+	VariantID          int64            `json:"variant_id,omitempty"`
+	Quantity           int              `json:"quantity,omitempty"`
+	Price              *decimal.Decimal `json:"price,omitempty"`
+	CompareAtPrice     *decimal.Decimal `json:"compare_at_price,omitempty"`
+	LinePrice          *decimal.Decimal `json:"line_price,omitempty"`
+	Title              string           `json:"title,omitempty"`
+	VariantTitle       string           `json:"variant_title,omitempty"`
+	SKU                string           `json:"sku,omitempty"`
+	Vendor             string           `json:"vendor,omitempty"`
+	ImageURL           string           `json:"image_url,omitempty"`
+	GiftCard           bool             `json:"gift_card,omitempty"`
+	Taxable            bool             `json:"taxable,omitempty"`
+	FulfillmentService string           `json:"fulfillment_service,omitempty"`
+	RequiresShipping   bool             `json:"requires_shipping,omitempty"`
+	// Properties           `json:"properties,omitempty"`
+	Grams    int       `json:"grams,omitempty"`
+	TaxLines []TaxLine `json:"tax_lines,omitempty"`
 }
 
 // CheckoutResource is the result from the checkouts/X.json endpoint

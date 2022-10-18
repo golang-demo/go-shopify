@@ -535,6 +535,8 @@ func CheckResponseError(r *http.Response) error {
 				}
 				topicAndElem := fmt.Sprintf("%v: %v", k, elem)
 				responseError.Errors = append(responseError.Errors, topicAndElem)
+			default:
+				responseError.Errors = append(responseError.Errors, fmt.Sprintf("%s", shopifyError.Errors))
 			}
 		}
 	}
