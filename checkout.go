@@ -137,13 +137,13 @@ type Checkout struct {
 	Email         string         `json:"email,omitempty"`
 	// legal_notice_url           `json:"legal_notice_url,omitempty"`
 	// location_id           `json:"location_id,omitempty"`
-	Name             string            `json:"name,omitempty"`
-	Note             string            `json:"note,omitempty"`
-	note_attributes  map[string]string `json:"note,omitempty"`
-	LineItems        []LineItem        `json:"line_items,omitempty"`
-	TaxLines         []TaxLine         `json:"tax_lines,omitempty"`
-	shipping_address Address           `json:"shipping_address,omitempty"`
-	Token            string            `json:"token,omitempty"`
+	Name            string            `json:"name,omitempty"`
+	Note            string            `json:"note,omitempty"`
+	NoteAttributes  map[string]string `json:"note_attributes,omitempty"`
+	LineItems       []LineItem        `json:"line_items,omitempty"`
+	TaxLines        []TaxLine         `json:"tax_lines,omitempty"`
+	ShippingAddress Address           `json:"shipping_address,omitempty"`
+	Token           string            `json:"token,omitempty"`
 }
 
 // CheckoutResource is the result from the checkouts/X.json endpoint
