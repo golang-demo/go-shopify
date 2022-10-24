@@ -2,6 +2,7 @@ package goshopify
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/shopspring/decimal"
 )
@@ -126,10 +127,13 @@ type CheckoutServiceOp struct {
 //   }
 // Checkout represents a Shopify checkout
 type Checkout struct {
-	// CompletedAt         *time.Time `json:"completed_at,omitempty"`
-	// CreatedAt           *time.Time `json:"created_at,omitempty"`
-	// Currency            string     `json:"currency,omitempty"`
-	// PresentmentCurrency string     `json:"presentment_currency,omitempty"`
+	ID                  int64      `json:"id,omitempty"`
+	CompletedAt         *time.Time `json:"completed_at,omitempty"`
+	Currency            string     `json:"currency,omitempty"`
+	PresentmentCurrency string     `json:"presentment_currency,omitempty"`
+	CreatedAt           time.Time  `json:"created_at,omitempty"`
+	UpdatedAt           time.Time  `json:"updated_at,omitempty"`
+	LandingSite         string     `json:"landing_site,omitempty"`
 	// CustomerId          int64      `json:"customer_id,omitempty"`
 	// CustomerLocale      string     `json:"customer_locale,omitempty"`
 	// // device_id            string     `json:"device_id,omitempty"`
