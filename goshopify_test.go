@@ -723,18 +723,6 @@ func TestCheckResponseError(t *testing.T) {
 			ResponseError{Status: 400, Message: "bad request"},
 		},
 		{
-			httpmock.NewStringResponse(500, `{"error": "terrible error"}`),
-			ResponseError{Status: 500, Message: "terrible error"},
-		},
-		{
-			httpmock.NewStringResponse(500, `{"errors": "This action requires read_customers scope"}`),
-			ResponseError{Status: 500, Message: "This action requires read_customers scope"},
-		},
-		{
-			httpmock.NewStringResponse(500, `{"errors": ["not", "very good"]}`),
-			ResponseError{Status: 500, Message: "not, very good", Errors: []string{"not", "very good"}},
-		},
-		{
 			httpmock.NewStringResponse(400, `{"errors": { "order": ["order is wrong"] }}`),
 			ResponseError{Status: 400, Message: "order: order is wrong", Errors: []string{"order: order is wrong"}},
 		},
@@ -750,12 +738,28 @@ func TestCheckResponseError(t *testing.T) {
 			&http.Response{StatusCode: 400, Body: errReader{}},
 			errors.New("test-error"),
 		},
+		{
+			httpmock.NewStringResponse(422, `{"error": "Unprocessable Entity - ok"}`),
+			ResponseError{Status: 422, Message: "Unprocessable Entity - ok"},
+		},
+		{
+			httpmock.NewStringResponse(500, `{"error": "terrible error"}`),
+			ResponseError{Status: 500, Message: "terrible error"},
+		},
+		{
+			httpmock.NewStringResponse(500, `{"errors": "This action requires read_customers scope"}`),
+			ResponseError{Status: 500, Message: "This action requires read_customers scope"},
+		},
+		{
+			httpmock.NewStringResponse(500, `{"errors": ["not", "very good"]}`),
+			ResponseError{Status: 500, Message: "not, very good", Errors: []string{"not", "very good"}},
+		},
 	}
 
 	for _, c := range cases {
 		actual := CheckResponseError(c.resp)
 		if fmt.Sprint(actual) != fmt.Sprint(c.expected) {
-			t.Errorf("CheckResponseError(): expected %v, actual %v", c.expected, actual)
+			t.Errorf("CheckResponseError(): expected [%v], actual [%v]", c.expected, actual)
 		}
 	}
 }
@@ -896,5 +900,42 @@ func TestDoRateLimit(t *testing.T) {
 				t.Errorf("%s: expected %#v, actual %#v", c.description, c.expected, client.RateLimits)
 			}
 		})
+	}
+}
+
+func TestListWithPagination(t *testing.T) {
+	setup()
+	defer teardown()
+
+	httpmock.RegisterResponder("GET",
+		fmt.Sprintf("https://fooshop.myshopify.com/%s/locations", client.pathPrefix),
+		httpmock.NewBytesResponder(200, loadFixture("locations.json")).
+			HeaderSet(http.Header{
+				"Link": {
+					fmt.Sprintf(
+						`<https://fooshop.myshopify.com/%s/locations.json?page_info=abc&limit=10>; rel="next", <https://fooshop.myshopify.com/%s/locations.json?page_info=123&limit=10>; rel="previous"`,
+						client.pathPrefix,
+						client.pathPrefix,
+					),
+				},
+			}))
+
+	var locations LocationsResource
+	pagination, err := client.ListWithPagination("locations", &locations, nil)
+	if err != nil {
+		t.Fatalf("Client.ListWithPagination returned error: %v", err)
+	}
+
+	if pagination == nil || pagination.NextPageOptions == nil || pagination.PreviousPageOptions == nil {
+		t.Fatalf("Expected pagination options but found at least one of them nil")
+	}
+
+	t.Logf("b: %#v \n", *pagination.NextPageOptions)
+
+	if pagination.NextPageOptions.PageInfo != "abc" {
+		t.Fatalf("Expected next page: %s   got: %s", "abc", pagination.NextPageOptions.PageInfo)
+	}
+	if pagination.PreviousPageOptions.PageInfo != "123" {
+		t.Fatalf("Expected prev page: %s   got: %s", "123", pagination.PreviousPageOptions.PageInfo)
 	}
 }

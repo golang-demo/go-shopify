@@ -2,7 +2,9 @@ package goshopify
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
+	"time"
 )
 
 // Return the full shop name, including .myshopify.com
@@ -45,4 +47,37 @@ func FulfillmentPathPrefix(resource string, resourceID int64) string {
 		prefix = fmt.Sprintf("%s/%d/fulfillments", resource, resourceID)
 	}
 	return prefix
+}
+
+type OnlyDate struct {
+	time.Time
+}
+
+func (c *OnlyDate) UnmarshalJSON(b []byte) error {
+	value := strings.Trim(string(b), `"`)
+	if value == "" || value == "null" {
+		*c = OnlyDate{time.Time{}}
+		return nil
+	}
+
+	t, err := time.Parse("2006-01-02", value)
+	if err != nil {
+		return err
+	}
+	*c = OnlyDate{t}
+	return nil
+}
+
+func (c *OnlyDate) MarshalJSON() ([]byte, error) {
+	return []byte(c.String()), nil
+}
+
+// It seems shopify accepts both the date with double-quotes and without them, so we just stick to the double-quotes for now.
+func (c *OnlyDate) EncodeValues(key string, v *url.Values) error {
+	v.Add(key, c.String())
+	return nil
+}
+
+func (c *OnlyDate) String() string {
+	return `"` + c.Format("2006-01-02") + `"`
 }

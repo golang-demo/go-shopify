@@ -2,7 +2,6 @@ package goshopify
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 )
 
@@ -32,8 +31,6 @@ type Collection struct {
 	BodyHTML       string     `json:"body_html"`
 	SortOrder      string     `json:"sort_order"`
 	TemplateSuffix string     `json:"template_suffix"`
-	ProductsCount  int        `json:"products_count,omitempty"`
-	CollectionType string     `json:"collection_type,omitempty"`
 	Image          Image      `json:"image"`
 	PublishedAt    *time.Time `json:"published_at"`
 	PublishedScope string     `json:"published_scope"`
@@ -65,17 +62,8 @@ func (s *CollectionServiceOp) ListProducts(collectionID int64, options interface
 func (s *CollectionServiceOp) ListProductsWithPagination(collectionID int64, options interface{}) ([]Product, *Pagination, error) {
 	path := fmt.Sprintf("%s/%d/products.json", collectionsBasePath, collectionID)
 	resource := new(ProductsResource)
-	headers := http.Header{}
 
-	headers, err := s.client.createAndDoGetHeaders("GET", path, nil, options, resource)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Extract pagination info from header
-	linkHeader := headers.Get("Link")
-
-	pagination, err := extractPagination(linkHeader)
+	pagination, err := s.client.ListWithPagination(path, resource, options)
 	if err != nil {
 		return nil, nil, err
 	}
