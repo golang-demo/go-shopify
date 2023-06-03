@@ -133,7 +133,6 @@ type Order struct {
 	OrderStatusUrl         string           `json:"order_status_url,omitempty"`
 	Gateway                string           `json:"gateway,omitempty"`
 	Confirmed              bool             `json:"confirmed,omitempty"`
-	TotalPriceUSD          *decimal.Decimal `json:"total_price_usd,omitempty"`
 	CheckoutToken          string           `json:"checkout_token,omitempty"`
 	Reference              string           `json:"reference,omitempty"`
 	SourceIdentifier       string           `json:"source_identifier,omitempty"`
@@ -197,8 +196,6 @@ type LineItem struct {
 	Grams                      int                   `json:"grams,omitempty"`
 	FulfillmentStatus          string                `json:"fulfillment_status,omitempty"`
 	TaxLines                   []TaxLine             `json:"tax_lines,omitempty"`
-	OriginLocation             *Address              `json:"origin_location,omitempty"`
-	DestinationLocation        *Address              `json:"destination_location,omitempty"`
 	AppliedDiscount            *AppliedDiscount      `json:"applied_discount,omitempty"`
 	DiscountAllocations        []DiscountAllocations `json:"discount_allocations,omitempty"`
 }
