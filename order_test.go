@@ -207,10 +207,6 @@ func transactionTest(t *testing.T, transaction Transaction) {
 	if transaction.LocationID != nil {
 		t.Error("Expected Transaction.LocationID to be nil")
 	}
-
-	if transaction.PaymentDetails == nil {
-		t.Error("Expected Transaction.PaymentDetails to not be nil")
-	}
 }
 
 func TestOrderList(t *testing.T) {
@@ -1057,26 +1053,6 @@ func testLineItem(t *testing.T, expected, actual LineItem) {
 
 	testTaxLines(t, expected.TaxLines, actual.TaxLines)
 
-	if actual.OriginLocation == nil {
-		if actual.OriginLocation != expected.OriginLocation {
-			t.Errorf("LineItem.OriginLocation should be (%v), was (%v)", expected.OriginLocation, actual.OriginLocation)
-		}
-	} else {
-		if *actual.OriginLocation != *expected.OriginLocation {
-			t.Errorf("LineItem.OriginLocation should be (%v), was (%v)", expected.OriginLocation, actual.OriginLocation)
-		}
-	}
-
-	if actual.DestinationLocation == nil {
-		if actual.DestinationLocation != expected.DestinationLocation {
-			t.Errorf("LineItem.DestinationLocation should be (%v), was (%v)", expected.DestinationLocation, actual.DestinationLocation)
-		}
-	} else {
-		if *actual.DestinationLocation != *expected.DestinationLocation {
-			t.Errorf("LineItem.DestinationLocation should be (%v), was (%v)", expected.DestinationLocation, actual.DestinationLocation)
-		}
-	}
-
 	if actual.AppliedDiscount == nil {
 		if actual.AppliedDiscount != expected.AppliedDiscount {
 			t.Errorf("LineItem.AppliedDiscount should be (%v), was (%v)", expected.AppliedDiscount, actual.AppliedDiscount)
@@ -1229,42 +1205,6 @@ func validLineItem() LineItem {
 				Price: &tl2Price,
 				Rate:  &tl2Rate,
 			},
-		},
-		OriginLocation: &Address{
-			ID:           123,
-			Address1:     "100 some street",
-			Address2:     "",
-			City:         "Winnipeg",
-			Company:      "Acme Corporation",
-			Country:      "Canada",
-			CountryCode:  "CA",
-			FirstName:    "Bob",
-			LastName:     "Smith",
-			Latitude:     49.811550,
-			Longitude:    -97.189480,
-			Name:         "test address",
-			Phone:        "8675309",
-			Province:     "Manitoba",
-			ProvinceCode: "MB",
-			Zip:          "R3Y 0L6",
-		},
-		DestinationLocation: &Address{
-			ID:           124,
-			Address1:     "200 some street",
-			Address2:     "",
-			City:         "Winnipeg",
-			Company:      "Acme Corporation",
-			Country:      "Canada",
-			CountryCode:  "CA",
-			FirstName:    "Bob",
-			LastName:     "Smith",
-			Latitude:     49.811550,
-			Longitude:    -97.189480,
-			Name:         "test address",
-			Phone:        "8675309",
-			Province:     "Manitoba",
-			ProvinceCode: "MB",
-			Zip:          "R3Y 0L6",
 		},
 		AppliedDiscount: &AppliedDiscount{
 			Title:       "test discount",

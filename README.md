@@ -4,8 +4,8 @@ The new home of Conversio's Shopify Go library.
 
 **Note**: The library does not have implementations of all Shopify resources, but it is being used in production and should be stable for usage. PRs for new resources and endpoints are welcome, or you can simply implement some yourself as-you-go. See the section "Using your own models" for more info.
 
-[![Build Status](https://travis-ci.org/bold-commerce/go-shopify.svg?branch=master)](https://travis-ci.org/bold-commerce/go-shopify)
-[![codecov](https://codecov.io/gh/bold-commerce/go-shopify/branch/master/graph/badge.svg)](https://codecov.io/gh/bold-commerce/go-shopify) [![Join the chat at https://gitter.im/bold-commerce/go-shopify](https://badges.gitter.im/bold-commerce/go-shopify.svg)](https://gitter.im/bold-commerce/go-shopify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/vstarapp/go-shopify.svg?branch=master)](https://travis-ci.org/vstarapp/go-shopify)
+[![codecov](https://codecov.io/gh/vstarapp/go-shopify/branch/master/graph/badge.svg)](https://codecov.io/gh/bvstarapp/go-shopify) [![Join the chat at https://gitter.im/vstarapp/go-shopify](https://badges.gitter.im/vstarapp/go-shopify.svg)](https://gitter.im/vstarapp/go-shopify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Supported Go Versions
 
@@ -14,13 +14,13 @@ This library is tested automatically against the latest version of Go (currently
 ## Install v3
 
 ```console
-$ go get github.com/bold-commerce/go-shopify/v3
+$ go get github.com/vstarapp/go-shopify/v3
 ```
 
 ## Use v3
 
 ```go
-import "github.com/bold-commerce/go-shopify/v3"
+import "github.com/vstarapp/go-shopify/v3"
 ```
 
 This gives you access to the `goshopify` package.
@@ -28,13 +28,13 @@ This gives you access to the `goshopify` package.
 ## Install v2
 
 ```console
-$ go get github.com/bold-commerce/go-shopify
+$ go get github.com/vstarapp/go-shopify
 ```
 
 ## Use v2
 
 ```go
-import "github.com/bold-commerce/go-shopify"
+import "github.com/vstarapp/go-shopify"
 ```
 
 This gives you access to the `goshopify` package.
@@ -120,7 +120,7 @@ numProducts, err := client.Product.Count(nil)
 ### Client Options
 
 When creating a client there are configuration options you can pass to NewClient. Simply use the last variadic param and
-pass in the built in options or create your own and manipulate the client. See [options.go](https://github.com/bold-commerce/go-shopify/blob/master/options.go)
+pass in the built in options or create your own and manipulate the client. See [options.go](https://github.com/vstarapp/go-shopify/blob/master/options.go)
 for more details.
 
 #### WithVersion

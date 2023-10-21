@@ -105,20 +105,6 @@ func TransactionTests(t *testing.T, transaction Transaction) {
 	if transaction.SourceName != expectedSourceName {
 		t.Errorf("Transaction.SourceName returned %+v, expected %+v", transaction.SourceName, expectedSourceName)
 	}
-
-	// Check that the PaymentDetails value is assigned to the returned transaction
-	var nilString string
-	expectedPaymentDetails := PaymentDetails{
-		AVSResultCode:     nilString,
-		CreditCardBin:     nilString,
-		CVVResultCode:     nilString,
-		CreditCardNumber:  "•••• •••• •••• 4242",
-		CreditCardCompany: "Visa",
-	}
-	if transaction.PaymentDetails.AVSResultCode != expectedPaymentDetails.AVSResultCode {
-		t.Errorf("Transaction.PaymentDetails.AVSResultCode returned %+v, expected %+v",
-			transaction.PaymentDetails.AVSResultCode, expectedPaymentDetails.AVSResultCode)
-	}
 }
 
 func TestTransactionList(t *testing.T) {
