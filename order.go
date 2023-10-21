@@ -127,11 +127,9 @@ type Order struct {
 	Tags                   string           `json:"tags,omitempty"`
 	LocationId             int64            `json:"location_id,omitempty"`
 	PaymentGatewayNames    []string         `json:"payment_gateway_names,omitempty"`
-	ProcessingMethod       string           `json:"processing_method,omitempty"`
 	Refunds                []Refund         `json:"refunds,omitempty"`
 	UserId                 int64            `json:"user_id,omitempty"`
 	OrderStatusUrl         string           `json:"order_status_url,omitempty"`
-	Gateway                string           `json:"gateway,omitempty"`
 	Confirmed              bool             `json:"confirmed,omitempty"`
 	CheckoutToken          string           `json:"checkout_token,omitempty"`
 	Reference              string           `json:"reference,omitempty"`
@@ -293,7 +291,6 @@ type ShippingLines struct {
 	Source                        string           `json:"source,omitempty"`
 	Phone                         string           `json:"phone,omitempty"`
 	RequestedFulfillmentServiceID string           `json:"requested_fulfillment_service_id,omitempty"`
-	DeliveryCategory              string           `json:"delivery_category,omitempty"`
 	CarrierIdentifier             string           `json:"carrier_identifier,omitempty"`
 	TaxLines                      []TaxLine        `json:"tax_lines,omitempty"`
 }
@@ -329,25 +326,23 @@ type TaxLine struct {
 }
 
 type Transaction struct {
-	ID             int64            `json:"id,omitempty"`
-	OrderID        int64            `json:"order_id,omitempty"`
-	Amount         *decimal.Decimal `json:"amount,omitempty"`
-	Kind           string           `json:"kind,omitempty"`
-	Gateway        string           `json:"gateway,omitempty"`
-	Status         string           `json:"status,omitempty"`
-	Message        string           `json:"message,omitempty"`
-	CreatedAt      *time.Time       `json:"created_at,omitempty"`
-	Test           bool             `json:"test,omitempty"`
-	Authorization  string           `json:"authorization,omitempty"`
-	Currency       string           `json:"currency,omitempty"`
-	LocationID     *int64           `json:"location_id,omitempty"`
-	UserID         *int64           `json:"user_id,omitempty"`
-	ParentID       *int64           `json:"parent_id,omitempty"`
-	DeviceID       *int64           `json:"device_id,omitempty"`
-	ErrorCode      string           `json:"error_code,omitempty"`
-	SourceName     string           `json:"source_name,omitempty"`
-	Source         string           `json:"source,omitempty"`
-	PaymentDetails *PaymentDetails  `json:"payment_details,omitempty"`
+	ID            int64            `json:"id,omitempty"`
+	OrderID       int64            `json:"order_id,omitempty"`
+	Amount        *decimal.Decimal `json:"amount,omitempty"`
+	Kind          string           `json:"kind,omitempty"`
+	Status        string           `json:"status,omitempty"`
+	Message       string           `json:"message,omitempty"`
+	CreatedAt     *time.Time       `json:"created_at,omitempty"`
+	Test          bool             `json:"test,omitempty"`
+	Authorization string           `json:"authorization,omitempty"`
+	Currency      string           `json:"currency,omitempty"`
+	LocationID    *int64           `json:"location_id,omitempty"`
+	UserID        *int64           `json:"user_id,omitempty"`
+	ParentID      *int64           `json:"parent_id,omitempty"`
+	DeviceID      *int64           `json:"device_id,omitempty"`
+	ErrorCode     string           `json:"error_code,omitempty"`
+	SourceName    string           `json:"source_name,omitempty"`
+	Source        string           `json:"source,omitempty"`
 }
 
 type ClientDetails struct {

@@ -34,12 +34,6 @@ func TransactionTests(t *testing.T, transaction Transaction) {
 		t.Errorf("Transaction.Kind returned %+v, expected %+v", transaction.Kind, expectedKind)
 	}
 
-	// Check that the Gateway value is assigned to the returned transaction
-	expectedGateway := "bogus"
-	if transaction.Gateway != expectedGateway {
-		t.Errorf("Transaction.Gateway returned %+v, expected %+v", transaction.Gateway, expectedGateway)
-	}
-
 	// Check that the Status value is assigned to the returned transaction
 	expectedStatus := "success"
 	if transaction.Status != expectedStatus {
