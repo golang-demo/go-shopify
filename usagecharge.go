@@ -29,7 +29,6 @@ type UsageChargeServiceOp struct {
 type UsageCharge struct {
 	BalanceRemaining *decimal.Decimal `json:"balance_remaining,omitempty"`
 	BalanceUsed      *decimal.Decimal `json:"balance_used,omitempty"`
-	BillingOn        *time.Time       `json:"billing_on,omitempty"`
 	CreatedAt        *time.Time       `json:"created_at,omitempty"`
 	Description      string           `json:"description,omitempty"`
 	ID               int64            `json:"id,omitempty"`
@@ -44,14 +43,10 @@ func (r *UsageCharge) UnmarshalJSON(data []byte) error {
 	// http://choly.ca/post/go-json-marshalling/
 	type alias UsageCharge
 	aux := &struct {
-		BillingOn *string `json:"billing_on"`
 		*alias
 	}{alias: (*alias)(r)}
 
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
-	}
-	if err := parse(&r.BillingOn, aux.BillingOn); err != nil {
 		return err
 	}
 	return nil
